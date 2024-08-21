@@ -51,7 +51,6 @@ def delete(id, title, autor, year, isbn):
     conn.close()
 
 
-
 connect()
-insert("python ebook", "meysam", 2024, 2534)
+# insert("python ebook", "ali", 2018, 4389)
 print(view())

@@ -2,6 +2,16 @@ from tkinter import *
 import backend
 
 
+
+def clear_list():
+    list1.delete(0, END) 
+    
+    
+def fill_list(books):
+    for book in books:
+        list1.insert(END, book) 
+
+
 window = Tk()
 
 
@@ -23,17 +33,21 @@ l4.grid(row= 1, column= 2)
 #Entreis
 
 title_text = StringVar()
+autor_text = StringVar()
+year_text = StringVar()
+isbn_text = StringVar()
+
 
 entry1 = Entry(window, textvariable= title_text)
 entry1.grid(row= 0, column= 1)
 
-entry1 = Entry(window, textvariable= title_text)
+entry1 = Entry(window, textvariable= autor_text)
 entry1.grid(row= 0, column= 3)
 
-entry1 = Entry(window, textvariable= title_text)
+entry1 = Entry(window, textvariable= year_text)
 entry1.grid(row= 1, column= 1)
 
-entry1 = Entry(window, textvariable= title_text)
+entry1 = Entry(window, textvariable= isbn_text)
 entry1.grid(row= 1, column= 3)
 
 
@@ -47,13 +61,31 @@ list1.configure(yscrollcommand= sb1.set)
 sb1.configure(command= list1.yview)
 
 
-b1 = Button(window, text= "View All", width= 12)
+def view_commnad():
+    clear_list()
+    books = backend.view()
+    fill_list(books)
+    
+
+b1 = Button(window, text= "View All", width= 12, command= lambda : view_commnad())
 b1.grid(row= 2, column= 3)
 
-b2 = Button(window, text= "Search Entry", width= 12)
+
+def search_command():
+    clear_list()
+    books = backend.search(title_text.get(), autor_text.get(), year_text.get(), isbn_text.get())
+    fill_list(books)
+    
+
+b2 = Button(window, text= "Search Entry", width= 12, command= lambda: search_command())
 b2.grid(row= 3, column= 3)
 
-b3 = Button(window, text= "Add Entry", width= 12)
+
+def add_command():
+    backend.insert(title_text.get(), autor_text.get(), year_text.get(), isbn_text.get())
+    view_commnad()
+
+b3 = Button(window, text= "Add Entry", width= 12, command= lambda: add_command())
 b3.grid(row= 4, column= 3)
 
 b4 = Button(window, text= "Update Selected", width= 12)
