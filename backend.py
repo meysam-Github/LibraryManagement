@@ -41,17 +41,16 @@ def delete(id):
     conn = sqlite3.connect("books.db")
     cur = conn.cursor() 
     cur.execute("DELETE FROM book WHERE id= ?", (id,))
+    conn.commit()
     conn.close()
     
     
-def delete(id, title, autor, year, isbn):
+def update(id, title, autor, year, isbn):
     conn = sqlite3.connect("books.db")
     cur = conn.cursor() 
-    cur.execute("UPDATE book SET title= ?, autor= ?, year= ?, isbn= ?",(title, autor, year, isbn, id))
+    cur.execute("UPDATE book SET title = ?, autor = ?, year = ?, isbn = ? WHERE id = ?", (title, autor, year, isbn, id))
+    conn.commit()
     conn.close()
-
 
 
 connect()
-insert("python ebook", "meysam", 2024, 2534)
-print(view())
